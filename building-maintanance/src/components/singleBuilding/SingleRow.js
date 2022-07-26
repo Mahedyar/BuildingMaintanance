@@ -1,5 +1,12 @@
-import classes from "./SingleRow.module.css"
-import { Calendar, DatePicker } from 'react-persian-datepicker';
+import classes from "./SingleRow.module.css";
+import { Calendar, DatePicker } from "react-persian-datepicker";
+import {
+  DateTimeInput,
+  DateTimeInputSimple,
+  DateInput,
+  DateInputSimple,
+} from "react-hichestan-datetimepicker";
+import { useState } from "react";
 
 const SingleRow = (props) => {
   const styles = {
@@ -9,8 +16,16 @@ const SingleRow = (props) => {
     daysOfWeek: "daysOfWeek",
     dayWrapper: "dayWrapper",
     selected: "selected",
-    heading: "heading"
+    heading: "heading",
   };
+  const [state , setState] = useState("")
+  const handleChange = (event) => {
+    const newState = {};
+    newState[event.target.name] = event.target.value;
+    // this.setState(newState);
+    setState(newState)
+  };
+  console.log(state);
   return (
     <tr>
       <td>{props.item.description}</td>
@@ -18,8 +33,23 @@ const SingleRow = (props) => {
       <td>{props.item.daysRemainingToNextService}</td>
       <td>{props.item.nextServiceDate}</td>
       <td>{props.item.servicePeriod}</td>
-      <td><input  placeholder="تاریخ را انتخاب کنید"></input></td>
-      <td><input placeholder="نام را وارد کنید"/></td>
+      {/* <td><input  placeholder="تاریخ را انتخاب کنید"></input></td> */}
+      <td >
+        {" "}
+        <DateInput
+          value={state.myDateTime}
+          name={"myDateTime"}
+          onChange={handleChange}
+        />
+        {/* <DateInputSimple
+          value={state.myDateTime}
+          name={"myDateTime"}
+          onChange={handleChange}
+        /> */}
+      </td>
+      <td>
+        <input placeholder="نام را وارد کنید" />
+      </td>
       <td>{props.item.services}</td>
     </tr>
   );
